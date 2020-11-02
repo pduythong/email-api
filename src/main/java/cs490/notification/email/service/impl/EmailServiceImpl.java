@@ -11,18 +11,17 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.InternetAddress;
+import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 @Service
 public class EmailServiceImpl implements EmailService {
 
+    private final ScheduledExecutorService quickService = new ScheduledThreadPoolExecutor(20);
     Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Autowired
     private JavaMailSender sender;
-
-    private final ScheduledExecutorService quickService = new ScheduledThreadPoolExecutor(20);
 
     public void sendMail(EmailContentDto emailContentDto) {
         try {
@@ -68,6 +67,20 @@ public class EmailServiceImpl implements EmailService {
             logger.error(ex.getMessage());
 //            throw ex;
         }
+    }
+
+    @Override
+    public void sendMail(List<EmailContentDto> dtos) {
+
+    }
+
+    @Override
+    public void sendASynchronousMail(List<EmailContentDto> dtos) {
+        for (EmailContentDto dto : dtos) {
+            sendASynchronousMail(dto);
+
+        }
+
     }
 }
 

@@ -14,4 +14,9 @@ public class UserProxyImpl implements UserProxy {
     public List<UserDto> getVendors(Set<Long> vendorIds) {
         return null;
     }
+
+    @Override
+    public UserDto getUser(Long useId) {
+        return null;
+    }
 }
